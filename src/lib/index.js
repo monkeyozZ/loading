@@ -4,10 +4,9 @@ export default {
   /**
    * 每个插件都有的install方法，用于安装插件
    * @param {Object} Vue - Vue类
-   * @param {Object} [pluginOptions] - 插件安装配置
+   * @param {Object} options - 插件安装配置
    */
-  install(Vue, pluginOptions = {}) {
-    // 创建"子类"方便挂载
+  install(Vue, options) {
     const VueLoading = Vue.extend(Loading)
     let loading = null
 
@@ -23,7 +22,7 @@ export default {
           // 手动创建一个未挂载的实例
           loading.$mount()
           // 挂载
-          document.querySelector(pluginOptions.container || 'body').appendChild(loading.$el)
+          document.body.appendChild(loading.$el)
         }
         // 显示loading
         loading.showloading()
@@ -31,16 +30,9 @@ export default {
       })
     }
     // 定义关闭loading方法
-    $loading.end = (noAnimate = false) => {
-      return new Promise((resolve) => {
-        if (!loading || !loading.isShow) {
-          resolve()
-          return
-        }
-        loading.hideloading()
-      })
+    $loading.end = () => {
+      loading.hideloading()
     }
-
-    Vue.loading = Vue.prototype.$loading = $loading
-  },
+    Vue.prototype.$loading = $loading
+  }
 }

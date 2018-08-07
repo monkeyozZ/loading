@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-show="isshow">
+  <div class="container" v-if="isshow">
     <div class="box">
       <div class="spinner">
     </div>
@@ -32,7 +32,8 @@ export default {
   height: 100%;
   top: 0;
   left: 0;
-  background: transparent;
+  z-index: 9999;
+  background:hsla(0,0%,100%,.9);
 }
 .box{
   width: 40px;
